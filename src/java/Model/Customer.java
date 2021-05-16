@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
     @NamedQuery(name = "Customer.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId"),
-    @NamedQuery(name = "Customer.findByOrderId", query = "SELECT c FROM Customer c WHERE c.orderId = :orderId"),
+    @NamedQuery(name = "Customer.findByEmail", query = "SELECT c FROM Customer c WHERE c.email = :email"),
     @NamedQuery(name = "Customer.findByCity", query = "SELECT c FROM Customer c WHERE c.city = :city"),
     @NamedQuery(name = "Customer.findByStreet", query = "SELECT c FROM Customer c WHERE c.street = :street"),
     @NamedQuery(name = "Customer.findByHouseNo", query = "SELECT c FROM Customer c WHERE c.houseNo = :houseNo"),
@@ -41,8 +41,8 @@ public class Customer implements Serializable {
     @Column(name = "customer_id")
     private Integer customerId;
     @Basic(optional = false)
-    @Column(name = "order_id")
-    private int orderId;
+    @Column(name = "email")
+    private String email;
     @Basic(optional = false)
     @Column(name = "city")
     private String city;
@@ -63,9 +63,9 @@ public class Customer implements Serializable {
         this.customerId = customerId;
     }
 
-    public Customer(Integer customerId, int orderId, String city, String street, int houseNo, int zipcode) {
+    public Customer(Integer customerId, String email, String city, String street, int houseNo, int zipcode) {
         this.customerId = customerId;
-        this.orderId = orderId;
+        this.email = email;
         this.city = city;
         this.street = street;
         this.houseNo = houseNo;
@@ -80,12 +80,12 @@ public class Customer implements Serializable {
         this.customerId = customerId;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public String getEmail() {
+        return email;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCity() {

@@ -5,7 +5,7 @@ import Repository.BrandRepo;
 
 public class BrandService {
     public static String addNewBrand(Brand brand) {
-        if (!brand.getName().isEmpty() && brand.getName().length() <= 45) {
+        if (brand.getName().length() <= 45) {
             if (BrandRepo.addNewBrand(brand)) {
                 return "A rögzítés sikeres";
             }
