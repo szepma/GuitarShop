@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.json.JSONObject;
 
 /**
  *
@@ -70,6 +71,22 @@ public class Customer implements Serializable {
         this.street = street;
         this.houseNo = houseNo;
         this.zipcode = zipcode;
+    }
+    
+    public JSONObject toJson() {
+        JSONObject object = new JSONObject();
+        object.put("customerId", this.customerId);
+        object.put("email", this.email);
+        object.put("city", this.city);
+        object.put("street", this.street);
+        object.put("houseNo", this.houseNo);
+        object.put("zipcode", this.zipcode);
+        
+        return object;
+    }
+    
+    public static Customer getCustomerById(int id) {
+        return Database.getDbConn().find(Customer.class, id);
     }
 
     public Integer getCustomerId() {
