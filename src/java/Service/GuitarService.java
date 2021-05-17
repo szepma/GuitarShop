@@ -2,6 +2,7 @@ package Service;
 
 import Model.Guitar;
 import Repository.GuitarRepo;
+import java.util.List;
 
 public class GuitarService {
     public static String addNewGuitar(Guitar guitar) {
@@ -16,5 +17,9 @@ public class GuitarService {
         else {
             return "A megadott adatok helytelenek";
         }
+    }
+    
+    public static List<Guitar> getAllGuitars() {
+        return GuitarRepo.getAllGuitars();
     }
 }

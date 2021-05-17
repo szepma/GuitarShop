@@ -4,10 +4,12 @@ import Model.Guitar;
 import Service.GuitarService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GuitarController extends HttpServlet {
@@ -35,6 +37,22 @@ public class GuitarController extends HttpServlet {
                 }
                 else {
                     returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                }
+                out.print(returnValue);
+            }
+            
+            //getAllGuitars
+            if (request.getParameter("task").equals("getAllGuitars")) {
+                JSONArray returnValue = new JSONArray();
+                List<Guitar> guitars = GuitarService.getAllGuitars();
+                
+                if (!guitars.isEmpty()) {
+                    for (Guitar guitar : guitars) {
+                        returnValue.put(guitar.toJson());
+                    }
+                }
+                else {
+                    returnValue.put(new JSONObject("result", "Nincs megjeleníthető gitár"));
                 }
                 out.print(returnValue);
             }

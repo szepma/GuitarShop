@@ -51,6 +51,10 @@ public class Brand implements Serializable {
         this.brandId = brandId;
         this.name = name;
     }
+    
+    public static Brand getBrandById(int id) {
+        return Database.getDbConn().find(Brand.class, id);
+    }
 
     public Integer getBrandId() {
         return brandId;

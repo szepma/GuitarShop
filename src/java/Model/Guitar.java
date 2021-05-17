@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.json.JSONObject;
 
 /**
  *
@@ -65,6 +66,21 @@ public class Guitar implements Serializable {
         this.type = type;
         this.noOfStrings = noOfStrings;
         this.year = year;
+    }
+    
+    public JSONObject toJson() {
+        JSONObject object = new JSONObject();
+        object.put("guitarId", this.guitarId);
+        object.put("brand", Brand.getBrandById(this.brandId).getName());
+        object.put("type", this.type);
+        object.put("noOfStrings", this.noOfStrings);
+        object.put("year", this.year);
+        
+        return object;
+    }
+    
+    public static Guitar getGuitarById(int id) {
+        return Database.getDbConn().find(Guitar.class, id);
     }
 
     public Integer getGuitarId() {

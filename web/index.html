@@ -1,16 +1,98 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Gitárbolt</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
-    <body>
-        <div>TODO write content</div>
+
+    <script>
+        function initMain() {
+            toggleView();
+            loadGuitars();
+        }
+        
+        function loadGuitars() {
+            var main = document.getElementById("main");
+            var request = {"task": "getAllGuitars"};
+
+            $.ajax({
+                url: "GuitarController",
+                type: "GET",
+                data: request,
+                success: function (response) {
+                    for (var i = 0; i < response.length; i++) {
+                        //Create HTML tags
+                        var newDiv = document.createElement("div");
+                        var title = document.createElement("h2");
+                        var year = document.createElement("p");
+                        var noStrings = document.createElement("p");
+                        var checkbox = document.createElement("input");
+
+                        //Set HTML content
+                        title.innerHTML = response[i].brand + " " + response[i].type;
+                        year.innerHTML = response[i].year;
+                        noStrings.innerHTML = "Húrok száma: " + response[i].noOfStrings;
+
+                        //Set input attributes
+                        checkbox.setAttribute("type", "checkbox");
+                        checkbox.setAttribute("name", response[i].guitarId);
+
+                        //Append newDiv's children
+                        newDiv.appendChild(title);
+                        newDiv.appendChild(year);
+                        newDiv.appendChild(noStrings);
+                        newDiv.appendChild(checkbox);
+
+                        main.appendChild(newDiv);
+                    }
+                },
+                error: function () {
+                    alert("A gitárok lekérése sikertelen");
+                }
+            });
+        }
+
+        function toggleView() {
+            var main = document.getElementById("guitar-list");
+            var customer = document.getElementById("customer");
+
+            if (customer.style.display == 'none') {
+                customer.style.display = 'block';
+                main.style.display = 'none';
+            }
+            else {
+                customer.style.display = 'none';
+                main.style.display = 'block';
+            }
+        }
+    </script>
+
+    <body onload="initMain()">
+        <div id="guitar-list">
+            <div id="main"></div>
+            <button onclick="toggleView()">Tovább</button>
+        </div>
+        
+        <div id="customer">
+            <div>
+                <label>Email:</label><input id="email">
+            </div>
+            <div>
+                <label>Város:</label><input id="city">
+            </div>
+            <div>
+                <label>Utca:</label><input id="street">
+            </div>
+            <div>
+                <label>Házszám:</label><input id="house">
+            </div>
+            <div>
+                <label>Irányítószám:</label><input id="zip">
+            </div>
+            
+            <button onclick="">Rendelés feladása</button>
+        </div>
     </body>
 </html>

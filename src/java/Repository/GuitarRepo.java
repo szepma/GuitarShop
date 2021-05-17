@@ -2,6 +2,8 @@ package Repository;
 
 import Model.Database;
 import Model.Guitar;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
@@ -29,6 +31,28 @@ public class GuitarRepo {
         catch (Exception ex) {
             System.out.println(ex.getMessage());
             return false;
+        }
+    }
+    
+    public static List<Guitar> getAllGuitars() {
+        List<Guitar> result = new ArrayList<>();
+        
+        try {
+            EntityManager em = Database.getDbConn();
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllGuitars");
+            
+            List<Object[]> guitars = spq.getResultList();
+            for (Object[] guitar : guitars) {
+                int id = Integer.parseInt(guitar[0].toString());
+                Guitar g = em.find(Guitar.class, id);
+                result.add(g);
+            }
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            return result;
         }
     }
 }
