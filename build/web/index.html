@@ -8,6 +8,7 @@
     </head>
 
     <script>
+        //First view
         function initMain() {
             toggleView();
             loadGuitars();
@@ -67,6 +68,70 @@
                 main.style.display = 'block';
             }
         }
+        
+        //Second view
+        function checkCustomer() {
+            var request = {"task": "checkCustomer",
+                "email": document.getElementById("email").value};
+            
+            var result = "";
+            
+            $.ajax({
+                url: "CustomerController",
+                type: "GET",
+                data: request,
+                async: false,
+                success: function(response) {
+                    result = response.result;
+                },
+                error: function(response) {
+                    result = response.result;
+                }
+            });
+            return result;
+        }
+        
+        function addCustomer() {
+            var request = {"task": "addNewCustomer",
+                "email": document.getElementById("email").value,
+                "city": document.getElementById("city").value,
+                "street": document.getElementById("street").value,
+                "house": document.getElementById("house").value,
+                "zip": document.getElementById("zip").value};
+            
+            $.ajax({
+                url: "CustomerController",
+                type: "POST",
+                data: request,
+                success: function(response) {
+                },
+                error: function() {
+                    alert("addCustomer hiba");
+                }
+            });
+        }
+            
+        
+        function addNewOrder() {
+            addCustomer();
+            var request = {"task": "addNewOrder",
+                "customer": checkCustomer()};
+            
+            console.log(checkCustomer());
+
+            $.ajax({
+                url: "OrdersController",
+                type: "POST",
+                data: request,
+                success: function(response) {
+                    console.log("Siker - " + response.result);
+                },
+                error: function(response){
+                    console.log("Fail - " + response.result);
+                    alert("addNewOrder hiba");
+                }
+            });
+        }
     </script>
 
     <body onload="initMain()">
@@ -92,7 +157,7 @@
                 <label>Irányítószám:</label><input id="zip">
             </div>
             
-            <button onclick="">Rendelés feladása</button>
+            <button onclick="addNewOrder()">Rendelés feladása</button>
         </div>
     </body>
 </html>

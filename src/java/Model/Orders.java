@@ -6,6 +6,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findByOrderId", query = "SELECT o FROM Orders o WHERE o.orderId = :orderId"),
-    @NamedQuery(name = "Orders.findByCustomerId", query = "SELECT o FROM Orders o WHERE o.customerId = :customerId")})
+    @NamedQuery(name = "Orders.findByCustomerId", query = "SELECT o FROM Orders o WHERE o.customerId = :customerId"),
+    @NamedQuery(name = "Orders.findByTimeOfOrder", query = "SELECT o FROM Orders o WHERE o.timeOfOrder = :timeOfOrder")})
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,6 +43,10 @@ public class Orders implements Serializable {
     @Basic(optional = false)
     @Column(name = "customer_id")
     private int customerId;
+    @Basic(optional = false)
+    @Column(name = "time_of_order")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timeOfOrder;
 
     public Orders() {
     }
@@ -47,9 +55,10 @@ public class Orders implements Serializable {
         this.orderId = orderId;
     }
 
-    public Orders(Integer orderId, int customerId) {
+    public Orders(Integer orderId, int customerId, Date timeOfOrder) {
         this.orderId = orderId;
         this.customerId = customerId;
+        this.timeOfOrder = timeOfOrder;
     }
 
     public Integer getOrderId() {
@@ -66,6 +75,14 @@ public class Orders implements Serializable {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public Date getTimeOfOrder() {
+        return timeOfOrder;
+    }
+
+    public void setTimeOfOrder(Date timeOfOrder) {
+        this.timeOfOrder = timeOfOrder;
     }
 
     @Override

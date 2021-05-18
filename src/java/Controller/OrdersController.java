@@ -4,6 +4,11 @@ import Model.Orders;
 import Service.OrdersService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.TimeZone;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +30,13 @@ public class OrdersController extends HttpServlet {
                 if (!request.getParameter("customer").isEmpty()) {
                     Integer customer = Integer.parseInt(request.getParameter("customer"));
                     
-                    Orders order = new Orders(0, customer);
-                    returnValue.put("result", OrdersService.addNewOrder(order));
+                    DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    formatter.setTimeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
+                    Date timeOfOrder = formatter.parse(formatter.format(new Date()));
+                    
+                    Orders order = new Orders(0, customer, timeOfOrder);
+                    String result = OrdersService.addNewOrder(order);
+                    returnValue.put("result", result);
                 }
                 else {
                     returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");

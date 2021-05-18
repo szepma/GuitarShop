@@ -43,6 +43,21 @@ public class CustomerController extends HttpServlet {
                 }
                 out.print(returnValue);
             }
+            
+            //checkCustomer
+            if (request.getParameter("task").equals("checkCustomer")) {
+                JSONObject returnValue = new JSONObject();
+                System.out.println("Itt vagyok");
+                
+                if (!request.getParameter("email").isEmpty()) {
+                    String result = CustomerService.checkCustomer(request.getParameter("email")).getCustomerId().toString();
+                    returnValue.put("result", result);
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                }
+                out.print(returnValue);
+            }
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");

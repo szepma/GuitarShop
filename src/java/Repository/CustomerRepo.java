@@ -48,7 +48,7 @@ public class CustomerRepo {
                 return Integer.parseInt(customer[0].toString());
             }
             
-            return Integer.parseInt(spq.getSingleResult().toString());
+            return 0;
         }
         catch (Exception ex) {
             System.out.println(ex.getMessage());
