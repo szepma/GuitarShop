@@ -55,4 +55,21 @@ public class OrdersRepo {
             return 0;
         }
     }
+    
+    public static boolean deleteOrderById(Orders order) {
+        try {
+            EntityManager em = Database.getDbConn();
+            
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteOrderById");
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.setParameter("idIN", order.getOrderId());
+            
+            spq.execute();
+            return true;
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
 }

@@ -84,4 +84,21 @@ public class CustomerRepo {
             return false;
         }
     }
+    
+    public static boolean deleteCustomerById(Customer customer) {
+        try {
+            EntityManager em = Database.getDbConn();
+            
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteCustomerById");
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.setParameter("idIN", customer.getCustomerId());
+            
+            spq.execute();
+            return true;
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
 }

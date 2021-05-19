@@ -56,6 +56,10 @@ public class OrderItem implements Serializable {
         this.guitarId = guitarId;
         this.orderId = orderId;
     }
+    
+    public static OrderItem getOrderItemById(int id) {
+        return Database.getDbConn().find(OrderItem.class, id);
+    }
 
     public Integer getItemId() {
         return itemId;

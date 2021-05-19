@@ -56,6 +56,22 @@ public class GuitarController extends HttpServlet {
                 }
                 out.print(returnValue);
             }
+            
+            //deleteGuitarById
+            if (request.getParameter("task").equals("deleteGuitarById")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("id").isEmpty()) {
+                    Integer id = Integer.parseInt(request.getParameter("id"));
+                    
+                    Guitar guitar = Guitar.getGuitarById(id);
+                    returnValue.put("result", GuitarService.deleteGuitarById(guitar));
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                }
+                out.print(returnValue);
+            }
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");

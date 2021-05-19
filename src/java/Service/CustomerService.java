@@ -37,4 +37,18 @@ public class CustomerService {
         Customer customer = Customer.getCustomerById(CustomerRepo.checkCustomer(email));
         return customer;
     }
+    
+    public static String deleteCustomerById(Customer customer) {
+        if (customer.getCustomerId() > 0) {
+            if (CustomerRepo.deleteCustomerById(customer)) {
+                return "A törlés sikeres";
+            }
+            else {
+                return "Az adatok helyesek, de a törlés sikertelen - Customer";
+            }
+        }
+        else {
+            return "A megadott adatok helytelenek";
+        }
+    }
 }

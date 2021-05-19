@@ -23,4 +23,21 @@ public class BrandRepo {
             return false;
         }
     }
+    
+    public static boolean deleteBrandById(Brand brand) {
+        try {
+            EntityManager em = Database.getDbConn();
+            
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteBrandById");
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.setParameter("idIN", brand.getBrandId());
+            
+            spq.execute();
+            return true;
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
 }

@@ -21,4 +21,18 @@ public class OrdersService {
     public static Integer getLastOrder(Orders order) {
         return OrdersRepo.getLastOrder(order);
     }
+    
+    public static String deleteOrderById(Orders order) {
+        if (order.getOrderId() > 0) {
+            if (OrdersRepo.deleteOrderById(order)) {
+                return "A törlés sikeres";
+            }
+            else {
+                return "Az adatok helyesek, de a törlés sikertelen - Orders";
+            }
+        }
+        else {
+            return "A megadott adatok helytelenek";
+        }
+    }
 }

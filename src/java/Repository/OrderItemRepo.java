@@ -27,4 +27,21 @@ public class OrderItemRepo {
             return false;
         }
     }
+    
+    public static boolean deleteOrderItemById(OrderItem orderItem) {
+        try {
+            EntityManager em = Database.getDbConn();
+            
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteOrderItemById");
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.setParameter("idIN", orderItem.getItemId());
+            
+            spq.execute();
+            return true;
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
 }

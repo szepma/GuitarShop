@@ -17,4 +17,18 @@ public class OrderItemService {
             return "A megadott adatok helytelenek";
         }
     }
+    
+    public static String deleteOrderItemById(OrderItem orderItem) {
+        if (orderItem.getItemId() > 0) {
+            if (OrderItemRepo.deleteOrderItemById(orderItem)) {
+                return "A törlés sikeres";
+            }
+            else {
+                return "Az adatok helyesek, de a törlés sikertelen - OrderItem";
+            }
+        }
+        else {
+            return "A megadott adatok helytelenek";
+        }
+    }
 }

@@ -33,6 +33,22 @@ public class BrandController extends HttpServlet {
                 }
                 out.print(returnValue);
             }
+            
+            //deleteBrandById
+            if (request.getParameter("task").equals("deleteBrandById")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("id").isEmpty()) {
+                    Integer id = Integer.parseInt(request.getParameter("id"));
+                    
+                    Brand brand = Brand.getBrandById(id);
+                    returnValue.put("result", BrandService.deleteBrandById(brand));
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                }
+                out.print(returnValue);
+            }
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");

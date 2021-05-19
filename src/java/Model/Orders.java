@@ -60,6 +60,10 @@ public class Orders implements Serializable {
         this.customerId = customerId;
         this.timeOfOrder = timeOfOrder;
     }
+    
+    public static Orders getOrderById(int id) {
+        return Database.getDbConn().find(Orders.class, id);
+    }
 
     public Integer getOrderId() {
         return orderId;

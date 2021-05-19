@@ -17,4 +17,18 @@ public class BrandService {
             return "A megadott adatok helytelenek";
         }
     }
+    
+    public static String deleteBrandById(Brand brand) {
+        if (brand.getBrandId() > 0) {
+            if (BrandRepo.deleteBrandById(brand)) {
+                return "A törlés sikeres";
+            }
+            else {
+                return "Az adatok helyesek, de a törlés sikertelen - Brand";
+            }
+        }
+        else {
+            return "A megadott adatok helytelenek";
+        }
+    }
 }

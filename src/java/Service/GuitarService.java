@@ -22,4 +22,18 @@ public class GuitarService {
     public static List<Guitar> getAllGuitars() {
         return GuitarRepo.getAllGuitars();
     }
+    
+    public static String deleteGuitarById(Guitar guitar) {
+        if (guitar.getGuitarId() > 0) {
+            if (GuitarRepo.deleteGuitarById(guitar)) {
+                return "A törlés sikeres";
+            }
+            else {
+                return "Az adatok helyesek, de a törlés sikertelen - Guitar";
+            }
+        }
+        else {
+            return "A megadott adatok helytelenek";
+        }
+    }
 }

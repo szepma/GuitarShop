@@ -35,6 +35,22 @@ public class OrderItemController extends HttpServlet {
                 }
                 out.print(returnValue);
             }
+            
+            //deleteOrderItemById
+            if (request.getParameter("task").equals("deleteOrderItemById")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("id").isEmpty()) {
+                    Integer id = Integer.parseInt(request.getParameter("id"));
+                    
+                    OrderItem orderItem = OrderItem.getOrderItemById(id);
+                    returnValue.put("result", OrderItemService.deleteOrderItemById(orderItem));
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                }
+                out.print(returnValue);
+            }
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");

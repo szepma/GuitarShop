@@ -55,4 +55,21 @@ public class GuitarRepo {
             return result;
         }
     }
+    
+    public static boolean deleteGuitarById(Guitar guitar) {
+        try {
+            EntityManager em = Database.getDbConn();
+            
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteGuitarById");
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.setParameter("idIN", guitar.getGuitarId());
+            
+            spq.execute();
+            return true;
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
 }

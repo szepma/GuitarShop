@@ -58,6 +58,22 @@ public class CustomerController extends HttpServlet {
                 }
                 out.print(returnValue);
             }
+            
+            //deleteCustomerById
+            if (request.getParameter("task").equals("deleteCustomerById")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("id").isEmpty()) {
+                    Integer id = Integer.parseInt(request.getParameter("id"));
+                    
+                    Customer customer = Customer.getCustomerById(id);
+                    returnValue.put("result", CustomerService.deleteCustomerById(customer));
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                }
+                out.print(returnValue);
+            }
         }
         catch (Exception ex) {
             System.out.println("JSON hiba");
