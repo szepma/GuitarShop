@@ -35,8 +35,21 @@ public class OrdersController extends HttpServlet {
                     Date timeOfOrder = formatter.parse(formatter.format(new Date()));
                     
                     Orders order = new Orders(0, customer, timeOfOrder);
-                    String result = OrdersService.addNewOrder(order);
+                    Integer result = OrdersService.addNewOrder(order);
                     returnValue.put("result", result);
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                }
+                out.print(returnValue);
+            }
+            
+            //getLastOrder
+            if (request.getParameter("task").equals("getLastOrder")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("customer").isEmpty()) {
+                    Integer customer = Integer.parseInt(request.getParameter("customer"));
                 }
                 else {
                     returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");

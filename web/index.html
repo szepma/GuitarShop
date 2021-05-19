@@ -38,6 +38,7 @@
 
                         //Set input attributes
                         checkbox.setAttribute("type", "checkbox");
+                        checkbox.setAttribute("class", "checkbox");
                         checkbox.setAttribute("name", response[i].guitarId);
 
                         //Append newDiv's children
@@ -116,19 +117,53 @@
             addCustomer();
             var request = {"task": "addNewOrder",
                 "customer": checkCustomer()};
-            
-            console.log(checkCustomer());
 
+            var returnValue = "";
             $.ajax({
                 url: "OrdersController",
                 type: "POST",
                 data: request,
+                async: false,
                 success: function(response) {
-                    console.log("Siker - " + response.result);
+                    returnValue = response.result;
                 },
                 error: function(response){
                     console.log("Fail - " + response.result);
                     alert("addNewOrder hiba");
+                }
+            });
+            
+            return returnValue;
+        }
+        
+        function getCheckedGuitars() {
+            var checkboxList = document.getElementsByClassName("checkbox");
+            var orderId = addNewOrder();
+            
+            for (var i = 0; i < checkboxList.length; i++) {
+                if (checkboxList[i].checked == true) {
+                    console.log(checkboxList[i].getAttribute("name"));
+                    console.log(orderId);
+                    addOrderItem(checkboxList[i].getAttribute("name"), orderId);
+                }
+                
+            }
+        }
+        
+        function addOrderItem(guitar, order) {
+            var request = {"task": "addNewOrderItem",
+                "guitar": guitar,
+                "order": order};
+            
+            $.ajax({
+                url: "OrderItemController",
+                type: "POST",
+                data: request,
+                success: function(response) {
+                    alert(response.result);
+                },
+                error: function(response) {
+                    alert(response.result);
                 }
             });
         }
@@ -157,7 +192,7 @@
                 <label>Irányítószám:</label><input id="zip">
             </div>
             
-            <button onclick="addNewOrder()">Rendelés feladása</button>
+            <button onclick="getCheckedGuitars()">Rendelés feladása</button>
         </div>
     </body>
 </html>

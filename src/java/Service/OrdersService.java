@@ -4,17 +4,17 @@ import Model.Orders;
 import Repository.OrdersRepo;
 
 public class OrdersService {
-    public static String addNewOrder(Orders order) {
+    public static Integer addNewOrder(Orders order) {
         if (order.getCustomerId() > 0) {
             if (OrdersRepo.addNewOrder(order)) {
-                return "A rögzítés sikeres - Orders";
+                return getLastOrder(order);
             }
             else {
-                return "Az adatok helyesek, de a rögzítés sikertelen";
+                return 0;
             }
         }
         else {
-            return "A megadott adatok helytelenek";
+            return 0;
         }
     }
     
