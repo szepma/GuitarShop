@@ -56,6 +56,27 @@ public class OrdersRepo {
         }
     }
     
+    public static boolean updateOrderById(Orders order) {
+        try {
+            EntityManager em = Database.getDbConn();
+            
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("updateOrderById");
+            
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("customerIN", Integer.class, ParameterMode.IN);
+
+            spq.setParameter("idIN", order.getOrderId());
+            spq.setParameter("customerIN", order.getCustomerId());
+            
+            spq.execute();
+            return true;
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
     public static boolean deleteOrderById(Orders order) {
         try {
             EntityManager em = Database.getDbConn();

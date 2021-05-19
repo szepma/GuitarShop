@@ -22,6 +22,20 @@ public class OrdersService {
         return OrdersRepo.getLastOrder(order);
     }
     
+    public static String updateOrderById(Orders order) {
+        if (order.getOrderId() > 0 && order.getCustomerId() > 0) {
+            if (OrdersRepo.updateOrderById(order)) {
+                return "A frissítés sikeres";
+            }
+            else {
+                return "Az adatok helyesek, de a frissítés sikertelen - Order";
+            }
+        }
+        else {
+            return "A megadott adatok helytelenek";
+        }
+    }
+    
     public static String deleteOrderById(Orders order) {
         if (order.getOrderId() > 0) {
             if (OrdersRepo.deleteOrderById(order)) {

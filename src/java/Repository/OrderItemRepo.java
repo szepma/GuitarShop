@@ -28,6 +28,29 @@ public class OrderItemRepo {
         }
     }
     
+    public static boolean updateOrderItemById(OrderItem orderItem) {
+        try {
+            EntityManager em = Database.getDbConn();
+            
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("updateOrderItemById");
+            
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("guitarIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("orderIN", Integer.class, ParameterMode.IN);
+
+            spq.setParameter("idIN", orderItem.getItemId());
+            spq.setParameter("guitarIN", orderItem.getGuitarId());
+            spq.setParameter("orderIN", orderItem.getOrderId());
+            
+            spq.execute();
+            return true;
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
     public static boolean deleteOrderItemById(OrderItem orderItem) {
         try {
             EntityManager em = Database.getDbConn();

@@ -56,6 +56,33 @@ public class GuitarRepo {
         }
     }
     
+    public static boolean updateGuitarById(Guitar guitar) {
+        try {
+            EntityManager em = Database.getDbConn();
+            
+            StoredProcedureQuery spq = em.createStoredProcedureQuery("updateGuitarById");
+            
+            spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("brandIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("typeIN", String.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("stringsIN", Integer.class, ParameterMode.IN);
+            spq.registerStoredProcedureParameter("yearIN", Integer.class, ParameterMode.IN);
+
+            spq.setParameter("idIN", guitar.getGuitarId());            
+            spq.setParameter("brandIN", guitar.getBrandId());
+            spq.setParameter("typeIN", guitar.getType());            
+            spq.setParameter("stringsIN", guitar.getNoOfStrings());            
+            spq.setParameter("yearIN", guitar.getYear());            
+            
+            spq.execute();
+            return true;
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+    }
+    
     public static boolean deleteGuitarById(Guitar guitar) {
         try {
             EntityManager em = Database.getDbConn();

@@ -57,6 +57,30 @@ public class GuitarController extends HttpServlet {
                 out.print(returnValue);
             }
             
+            //updateGuitarById
+            if (request.getParameter("task").equals("updateGuitarById")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("id").isEmpty() && !request.getParameter("brand").isEmpty() && !request.getParameter("type").isEmpty() && !request.getParameter("strings").isEmpty() && !request.getParameter("year").isEmpty()) {
+                    Integer id = Integer.parseInt(request.getParameter("id"));
+                    Integer brand = Integer.parseInt(request.getParameter("brand"));
+                    String type = request.getParameter("type");
+                    Integer strings = Integer.parseInt(request.getParameter("strings"));
+                    Integer year = Integer.parseInt(request.getParameter("year"));
+                    
+                    Guitar guitar = Guitar.getGuitarById(id);
+                    guitar.setBrandId(brand);
+                    guitar.setType(type);
+                    guitar.setNoOfStrings(strings);
+                    guitar.setYear(year);
+                    returnValue.put("result", GuitarService.updateGuitarById(guitar));
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                }
+                out.print(returnValue);
+            }
+            
             //deleteGuitarById
             if (request.getParameter("task").equals("deleteGuitarById")) {
                 JSONObject returnValue = new JSONObject();

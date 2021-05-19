@@ -18,6 +18,20 @@ public class BrandService {
         }
     }
     
+    public static String updateBrandById(Brand brand) {
+        if (brand.getBrandId() > 0 && brand.getName().length() <= 45) {
+            if (BrandRepo.updateBrandById(brand)) {
+                return "A frissítés sikeres";
+            }
+            else {
+                return "Az adatok helyesek, de a frissítés sikertelen - Brand";
+            }
+        }
+        else {
+            return "A megadott adatok helytelenek";
+        }
+    }
+    
     public static String deleteBrandById(Brand brand) {
         if (brand.getBrandId() > 0) {
             if (BrandRepo.deleteBrandById(brand)) {

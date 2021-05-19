@@ -57,6 +57,24 @@ public class OrdersController extends HttpServlet {
                 out.print(returnValue);
             }
             
+            //updateOrderById
+            if (request.getParameter("task").equals("updateOrderById")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("id").isEmpty() && !request.getParameter("customer").isEmpty()) {
+                    Integer id = Integer.parseInt(request.getParameter("id"));
+                    Integer customer = Integer.parseInt(request.getParameter("customer"));
+                    
+                    Orders order = Orders.getOrderById(id);
+                    order.setCustomerId(customer);
+                    returnValue.put("result", OrdersService.updateOrderById(order));
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                }
+                out.print(returnValue);
+            }
+            
             //deleteOrderById
             if (request.getParameter("task").equals("deleteOrderById")) {
                 JSONObject returnValue = new JSONObject();

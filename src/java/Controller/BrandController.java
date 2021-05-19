@@ -34,6 +34,24 @@ public class BrandController extends HttpServlet {
                 out.print(returnValue);
             }
             
+            //updateBrandById
+            if (request.getParameter("task").equals("updateBrandById")) {
+                JSONObject returnValue = new JSONObject();
+                
+                if (!request.getParameter("id").isEmpty() && !request.getParameter("name").isEmpty()) {
+                    Integer id = Integer.parseInt(request.getParameter("id"));
+                    String name = request.getParameter("name");
+                    
+                    Brand brand = Brand.getBrandById(id);
+                    brand.setName(name);
+                    returnValue.put("result", BrandService.updateBrandById(brand));
+                }
+                else {
+                    returnValue.put("result", "A mezők nincsenek megfelelően kitöltve");
+                }
+                out.print(returnValue);
+            }
+            
             //deleteBrandById
             if (request.getParameter("task").equals("deleteBrandById")) {
                 JSONObject returnValue = new JSONObject();
